@@ -4,7 +4,8 @@ VerticalViewPager
 [![Platform](http://img.shields.io/badge/platform-android-brightgreen.svg?style=flat)](http://developer.android.com/index.html)
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-Very (very) simple vertically ViewPager and vertically transformer for Android.
+Vertically ViewPager and vertically transformer for Android.
+This library is not copy ViewPager code. Extended class.
 
 ![default](art/default.gif) ![zoom_out](art/zoom_out.gif) ![stack](art/stack.gif)
 
@@ -26,7 +27,7 @@ viewPager.setPageTransformer(treu, new DefaultTransformer());
 ```groovy
 
 dependencies {
-    compile 'me.kaelaela:VerticalViewPager:1.0.0'
+    compile 'me.kaelaela:verticalviewpager:1.0.0@aar'
 }
 
 ```
