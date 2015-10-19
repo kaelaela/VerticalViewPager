@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewPager() {
         VerticalViewPager viewPager = (VerticalViewPager) findViewById(R.id.vertical_viewpager);
-        //viewPager.setPageTransformer(true, new ZoomOutTransformer());
+        //viewPager.setPageTransformer(false, new ZoomOutTransformer());
         //viewPager.setPageTransformer(true, new StackTransformer());
         String title = "ContentFragment";
         viewPager.setAdapter(new ContentFragmentAdapter.Holder(getSupportFragmentManager())

@@ -15,10 +15,10 @@ This library is not copy ViewPager code. Extended class.
 
 VerticalViewPager viewPager = new VerticalViewPager();
 viewPager.setAdapter(adapter);
-viewPager.setPageTransformer(treu, new DefaultTransformer());
+viewPager.setPageTransformer(false, new DefaultTransformer());
 
-//viewPager.setPageTransformer(treu, new ZoomOutTransformer());
-//viewPager.setPageTransformer(treu, new StackTransformer());
+//viewPager.setPageTransformer(false, new ZoomOutTransformer());
+//viewPager.setPageTransformer(true, new StackTransformer());
 
 ```
 
