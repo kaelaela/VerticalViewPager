@@ -3,6 +3,7 @@ VerticalViewPager
 
 [![Platform](http://img.shields.io/badge/platform-android-brightgreen.svg?style=flat)](http://developer.android.com/index.html)
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-VerticalViewPager-green.svg?style=flat)](https://android-arsenal.com/details/1/2651)
 
 Vertically ViewPager and vertically transformer for Android.
 This library is not copy ViewPager code. Extended class.
