@@ -15,6 +15,12 @@ before_script:
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
+  env:
+    global:
+      - secure: "hF2c8tdRrCp1F8DfGxAr0RjjtlrY4CuveL4mCrKYSTrMqfJJLlDzXnwSU20JqcAspcwXMMyzD/jKoT5iWpwRKPPDOkMw2U53ManMuF6gy1v1Pv2eQYfaNrYMAGVd20gcb8AvRhWFEycaeBFnFTSe4E5sro3grhJM2rRWrD0YsO7Yht9VLW+Z78KpTiDYgO/QJermMNbB3t06sS8guwWZ5MKkRcPGrvpf4HpNCQoGRh/CaJKWUx2wRzbR+p4hsiy6kgJrUVyO1Y2G5KdARXH01hTRVGRoRD6kzNdM+sMAF88AKvcd95d/DBrbFVAqFfJNtSHrc+3AYit+ZdImPuslp8TdQtFXEunm0Je9T+fYA6evL4i+3G9yKEN4iCfmh8r2RGbA7VPYG5PYhHACouBUVF1ewoiHxUxs2M/DgBc0lLmLt2wigTXIK+2nCrVC9+LAwnvi2xAUCgdSQ6oK6LfjG7YvlFPYhi9dpSezElf9jCbHRQVlY1JVxIE+Hsh0zadxulUFzP4Apr+E9Y4E2TAmtECpcJhCO8MCaW1p2QFlrk/MW1sYjvRaXK5dprIGDYRddA8lVv8i3M9Ey7Dn3Pdz2/+CvrqB4UOVDlIn8/1sgpxpRcA2ijfgdZFTvJu1hHNOOjXq0xsr7TwuJIwu8xxxMm31e+2HWsyuPLrh+Ta7oS0="
 
 script:
-  - ./gradlew assembleDebug
+  - touch local.properties
+  - echo secretvalue > local.properties
+  - cat local.properties
+  - ./gradlew assembleDebug test
