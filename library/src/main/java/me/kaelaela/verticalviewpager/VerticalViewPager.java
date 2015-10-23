@@ -45,8 +45,10 @@ public class VerticalViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
+        boolean intercept = super.onInterceptTouchEvent(swapTouchEvent(event));
+        //If not intercept, touch event should not be swapped.
         swapTouchEvent(event);
-        return super.onInterceptTouchEvent(swapTouchEvent(event));
+        return intercept;
     }
 
     @Override
