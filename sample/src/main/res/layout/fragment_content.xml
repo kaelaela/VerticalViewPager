@@ -11,13 +11,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary" />
 
-    <TextView
-            android:id="@+id/text"
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/content_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@color/colorAccent"
-            android:textSize="56sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent" />
 
 </LinearLayout>
