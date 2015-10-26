@@ -3,11 +3,12 @@ package me.kaelaela.sample;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class ContentFragment extends Fragment {
 
@@ -28,7 +29,7 @@ public class ContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         initToolbar(view);
-        setPosition(view);
+        initRecyclerView(view);
         return view;
     }
 
@@ -37,9 +38,10 @@ public class ContentFragment extends Fragment {
         toolbar.setTitle(getTitle());
     }
 
-    private void setPosition(View view) {
-        TextView textView = (TextView) view.findViewById(R.id.text);
-        textView.setText(String.valueOf(getPosition()));
+    private void initRecyclerView(View view) {
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.content_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(new ContentAdapter());
     }
 
     public String getTitle() {
