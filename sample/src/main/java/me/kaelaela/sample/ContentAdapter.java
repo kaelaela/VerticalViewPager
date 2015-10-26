@@ -15,7 +15,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ContentView content = (ContentView) holder;
-        content.textView.append(String.valueOf(position));
+        content.textView.setText("content" + position);
     }
 
     @Override
