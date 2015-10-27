@@ -1,0 +1,29 @@
+language: android
+jdk: oraclejdk7
+
+sudo: false
+
+env:
+  global:
+    - secure: "i78yVWSwlijo5Z21rApQ4hB3DqAiNDVJsKqHG6o92evIj1QE8KM6LwvWqHEA5/VOqqDDpsJIznMWfEvtj3Oc2hXp54ws/nQ9V83uhc1bA5RQTnk6ZZut+MnxGuneoa8D7RwP7RVc+5J9A5oLcIh+/oz96AzSPsIbN15aiDRah91uQP7whIIgNyR9MXf3GQjGKQ0fFn7lgNy5MN/BcrFyp+vM0tUQF7SHsaaMmIR4yZ80n9mJ5PtaW9fW6pWO0Qi+BzmE6o1soxK97lJz1STA1GJyP+jAvQ0dEsgcdC2pMoamI8YaoT453fj/nYAgICVKWK2StppOSxR5Jwq3lgWGsT6ID79f8CAV+Ji2zoKoxoBqBNsNYp9agvSyqNQqXDZIiJdkihmsVUysSeVSleIWR5ryFyiLkvr2jqkv61cZvPkqAmYsNvnTuascEOvPF6trOKnNAyr65twZ1A//VNoYUfPbofGI7MKncplQiJ68afsmPLLJpvVS9wUL7SNtEYkeOeWdnQ5zJpkZiJ1LGJzzorEvfcSNxRZ5wi+bJx/y9sT6l/SEva+HWMZrBoCgJvGp6yAx242CBINbjWKz4ohMnCx9m/mk6VKahuNdCJReE59+X2Y7KT/NReDwuYV+EsNKxbimUL1aimerUHCysxeP48+U2tbDglpMi1T2qoZgmxo="
+    - ADB_INSTALL_TIMEOUT=8
+
+android:
+  components:
+    - build-tools-23.0.1
+    - android-23
+    - addon-google_apis-google-23
+    - extra-google-m2repository
+    - extra-android-support
+    - extra-android-m2repository
+
+before_script:
+  - echo no | android create avd --force -n test -t android-19 --abi default/armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - adb wait-for-device
+  - adb shell input keyevent 82 &
+  - echo "bintrayUser=${BINTRAY_USER}" >> local.properties
+  - echo "bintrayApiKey=${BINTRAY_API_KEY}" >> local.properties
+
+script:
+- ./gradlew assembleDebug --stacktrace
