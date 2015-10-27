@@ -26,4 +26,4 @@ before_script:
   - echo "bintrayApiKey=${BINTRAY_API_KEY}" >> local.properties
 
 script:
-- ./gradlew clean android:assembleDebug --stacktrace
+- ./gradlew assembleDebug --stacktrace
