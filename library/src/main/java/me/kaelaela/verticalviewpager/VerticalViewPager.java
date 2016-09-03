@@ -15,37 +15,55 @@ package me.kaelaela.verticalviewpager;
  */
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+
 import me.kaelaela.verticalviewpager.transforms.DefaultTransformer;
 
 public class VerticalViewPager extends ViewPager {
+	// Intercept threshold default (in dp)
+	private static final float DEFAULT_THRESHOLD_Y = 16f;
+
+	// Variables used for intercepting touches
+	private float startY;
+	private float thresholdY;
 
     public VerticalViewPager(Context context) {
-        this(context, null);
+        super(context);
+	    init(context, null);
     }
 
     public VerticalViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setPageTransformer(false, new DefaultTransformer());
+	    init(context, attrs);
     }
 
-    private MotionEvent swapTouchEvent(MotionEvent event) {
-        float width = getWidth();
-        float height = getHeight();
+	private void init(Context context, AttributeSet attrs) {
+		setPageTransformer(false, new DefaultTransformer());
 
-        float swappedX = (event.getY() / height) * width;
-        float swappedY = (event.getX() / width) * height;
+		if (attrs == null) {
+			thresholdY = convertDpToPixel(context, DEFAULT_THRESHOLD_Y);
+			return;
+		}
 
-        event.setLocation(swappedX, swappedY);
-
-        return event;
-    }
+		TypedArray attributes = null;
+		try {
+			attributes = context.obtainStyledAttributes(attrs, R.styleable.VerticalViewPager);
+			thresholdY = attributes.getDimensionPixelSize(R.styleable.VerticalViewPager_vvp_threshold, convertDpToPixel(context, DEFAULT_THRESHOLD_Y));
+		} finally {
+			if (attributes != null) {
+				attributes.recycle();
+			}
+		}
+	}
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        boolean intercept = super.onInterceptTouchEvent(swapTouchEvent(event));
+        boolean intercept = shouldIntercept(event) || super.onInterceptTouchEvent(swapTouchEvent(event));
         //If not intercept, touch event should not be swapped.
         swapTouchEvent(event);
         return intercept;
@@ -56,4 +74,34 @@ public class VerticalViewPager extends ViewPager {
         return super.onTouchEvent(swapTouchEvent(ev));
     }
 
+	private boolean shouldIntercept(MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			startY = event.getY();
+		} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+			if (Math.abs(startY - event.getY()) > thresholdY) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private MotionEvent swapTouchEvent(MotionEvent event) {
+		float width = getWidth() - getPaddingLeft() - getPaddingRight();
+		float height = getHeight() - getPaddingTop() - getPaddingBottom();
+
+		float swappedX = (event.getY() / height) * width;
+		float swappedY = (event.getX() / width) * height;
+
+		event.setLocation(swappedX, swappedY);
+
+		return event;
+	}
+
+	private static int convertDpToPixel(Context context, float dp) {
+		Resources resources = context.getResources();
+		DisplayMetrics metrics = resources.getDisplayMetrics();
+
+		return (int) (dp * (metrics.densityDpi / 160f));
+	}
 }
